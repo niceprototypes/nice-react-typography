@@ -10,8 +10,8 @@
 import styled, { css } from "styled-components"
 import type { ForegroundColorType, FontSizeType, FontWeightType, LineHeightType } from "nice-styles"
 import { getToken } from "nice-react-styles"
-import { TypographyAsType, TypographyAlignType, TypographyLineClampType, TypographyWordBreakType } from "./types"
-import { styleAntialiasing } from "./helpers/styleAntialiasing"
+import { AsType, AlignType } from "./types"
+import { styleAntialiasing } from "../../helpers/styleAntialiasing"
 
 /**
  * CSS styles for optimized text legibility
@@ -34,16 +34,14 @@ export const styleOptimizedLegibility = css`
 `
 
 export const StyledTypography = styled.p<{
-  $as: TypographyAsType
+  $as: AsType
   $size?: FontSizeType
   $weight?: FontWeightType
   $color?: ForegroundColorType
   $antialiased?: boolean
   $legibilityOptimized?: boolean
-  $align?: TypographyAlignType
+  $align?: AlignType
   $lineHeight?: LineHeightType
-  $lineClamp?: TypographyLineClampType
-  $wordBreak?: TypographyWordBreakType
   $code?: boolean
 }>`
   margin: 0;
@@ -79,26 +77,26 @@ export const StyledTypography = styled.p<{
   /* Font size */
   ${({ $as, $size }) => {
     // Determine effective font size
-    let effectiveFontSize: FontSizeType
+    let effectiveSize: FontSizeType
 
     if ($size) {
-      effectiveFontSize = $size
+      effectiveSize = $size
     } else {
       // Default sizes for headings
       switch ($as) {
         case "h1":
-          effectiveFontSize = "larger"
+          effectiveSize = "larger"
           break
         case "h2":
-          effectiveFontSize = "large"
+          effectiveSize = "large"
           break
         default:
-          effectiveFontSize = "base"
+          effectiveSize = "base"
       }
     }
 
     return css`
-      font-size: ${getToken("fontSize", effectiveFontSize).var};
+      font-size: ${getToken("fontSize", effectiveSize).var};
     `
   }}
 
@@ -141,23 +139,4 @@ export const StyledTypography = styled.p<{
       line-height: ${getToken("lineHeight", effectiveLineHeight).var};
     `
   }}
-
-  /* Line clamping for text truncation */
-  ${({ $lineClamp }) => {
-    if (!$lineClamp || $lineClamp === "none") return ""
-
-    return css`
-      display: -webkit-box;
-      -webkit-line-clamp: ${$lineClamp};
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    `
-  }}
-
-  /* Word break behavior */
-  ${({ $wordBreak }) =>
-    $wordBreak &&
-    css`
-      word-break: ${$wordBreak};
-    `}
 `
