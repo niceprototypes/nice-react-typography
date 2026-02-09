@@ -42,12 +42,10 @@ const Typography: React.FC<TypographyProps> = ({
   className,
   code = false,
   color,
-  lineClamp,
   lineHeight,
   size,
   style,
   weight,
-  wordBreak,
 }) => {
   return (
     <StyledTypography
@@ -57,11 +55,9 @@ const Typography: React.FC<TypographyProps> = ({
         $as={as}
         $code={code}
         $color={color}
-        $lineClamp={lineClamp}
         $lineHeight={lineHeight}
         $size={size}
         $weight={weight}
-        $wordBreak={wordBreak}
         as={as}
         className={className}
         style={style}
